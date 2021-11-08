@@ -1,0 +1,31 @@
+<h1>Búsqueda de una Criptomoneda</h1>
+
+ <form>
+ 	<div class="mb-3">
+		 <%= form_tag home_lookup_path, :method => 'POST' do %>
+		 <%= text_field_tag 'sym', nil, placeholder: "Entre símbolo de la criptomoneda", size: 50, class:"form-control" %>
+		 <br/>
+		 <%= submit_tag 'Buscar', class:"btn btn-primary" %>
+		 <% end %>
+	</div>
+ </form>
+ <br/><br/>
+
+<%= @simbolo %><br/>
+
+
+<% if @simbolo %>
+	<% for x in @lookup_coin %>
+		<% if @simbolo == x["symbol"] %>
+			<%= x["name"] %> <br/>
+			<% for n in x["quote"] %>
+				<% for m in n[1] %>
+					<%= m[0] %>: <%= m[1] %> <br/>
+				<% end %>
+			<% end %>
+			
+		<% end %>
+	<% end %>
+<% end %>
+
+
