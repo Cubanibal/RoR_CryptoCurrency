@@ -1,4 +1,41 @@
-<h1>Página Principal</h1>
-<p>El típico parrafo inicial</p>
 
-<%= @coins %>
+<center><h1>LISTADO de CRIPTOMONEDAS</h1></center>
+
+
+  
+
+<table class="table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Símbolo</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio</th>
+      
+      <th scope="col">%_cambio_1h</th>
+      <th scope="col">%_cambio_24h</th>
+      <th scope="col">%_cambio_7d</th>
+      <th scope="col">market_cap</th>
+      
+     
+
+    </tr>
+  </thead>
+  <tbody>
+  	<% for x in @coins %>
+
+    <tr>
+      <th scope="row"><%= x["symbol"] %></th>
+      <td><%= x["name"] %></td>
+      <td><%= number_to_currency(x["quote"]["USD"]["price"]) %></td>
+      
+      <td><%= x["quote"]["USD"]["percent_change_1h"] %>%</td>
+      <td><%= x["quote"]["USD"]["percent_change_24h"] %>%</td>
+      <td><%= x["quote"]["USD"]["percent_change_7d"] %>%</td>
+      <td><%= number_to_currency(x["quote"]["USD"]["market_cap"]) %></td>
+      
+      
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+

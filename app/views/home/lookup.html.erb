@@ -11,18 +11,14 @@
  </form>
  <br/><br/>
 
-<%= @simbolo %><br/>
+
 
 
 <% if @simbolo %>
 	<% for x in @lookup_coin %>
 		<% if @simbolo == x["symbol"] %>
-			<%= x["name"] %> <br/>
-			<% for n in x["quote"] %>
-				<% for m in n[1] %>
-					<%= m[0] %>: <%= m[1] %> <br/>
-				<% end %>
-			<% end %>
+			<strong>Nombre: </strong> <%= x["name"] %> <br/>
+			<strong>Precio actual: </strong> <%= number_to_currency(x["quote"]["USD"]["price"]) %>
 			
 		<% end %>
 	<% end %>

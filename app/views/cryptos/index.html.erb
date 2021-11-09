@@ -1,33 +1,51 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Cryptos</h1>
+<h1>Criptomonedas</h1>
 
-<table>
+<table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
-      <th>Simbolo</th>
-      <th>User</th>
-      <th>Cost per</th>
-      <th>Amount owned</th>
-      <th colspan="3"></th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Precio Actual</th>
+      <th scope="col">Valor Total</th>
+      <th scope="col">Total Pagado</th>
+      <th scope="col">Ganancia/Perdida</th>
+      <th scope="col">Precio Pagado</th>
+      <th scope="col">Cantidad</th>
+      
     </tr>
   </thead>
 
   <tbody>
     <% @cryptos.each do |crypto| %>
-      <tr>
-        <td><%= crypto.simbolo %></td>
-        <td><%= crypto.user_id %></td>
-        <td><%= crypto.cost_per %></td>
-        <td><%= crypto.amount_owned %></td>
-        <td><%= link_to 'Show', crypto %></td>
-        <td><%= link_to 'Edit', edit_crypto_path(crypto) %></td>
-        <td><%= link_to 'Destroy', crypto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <% if crypto.user_id == current_user.id %>
+        <% if crypto.simbolo %>
+          <% crypto.simbolo = crypto.simbolo.upcase %>
+        <% end %>
+        <tr scope="row">
+        <% for x in @lookup_crypto %>
+          <% if crypto.simbolo == x["symbol"] %>
+            <td><%= link_to x["name"], crypto %> </td>
+            <td>$<%= x["quote"]["USD"]["price"] %> </td>
+            <td>$<%= crypto.cost_per * crypto.amount_owned %> </td>
+            <td>$<%= x["quote"]["USD"]["price"].to_d * crypto.amount_owned %> </td>
+            <td>$<%= (x["quote"]["USD"]["price"].to_d * crypto.amount_owned) - (crypto.amount_owned  * crypto.cost_per)  %>  </td>
+            <% @ganapierde +=  (x["quote"]["USD"]["price"].to_d * crypto.amount_owned) - (crypto.amount_owned  * crypto.cost_per)  %>
+          <% end %>
+        <% end %>
+
+          <td><%= crypto.cost_per %></td>
+          <td><%= crypto.amount_owned %></td>
+          
+        </tr>
+        <% end %>
     <% end %>
   </tbody>
 </table>
 
-<br>
+<br/>
+<br/>
+<strong>Portfolio Ganancias/Perdidas: </strong> <%= number_to_currency(@ganapierde) %> 
+<br/>
+<br/>
 
-<%= link_to 'New Crypto', new_crypto_path %>
+<%= link_to 'Nueva Cripto', new_crypto_path, class:"btn btn-outline-success" %>
