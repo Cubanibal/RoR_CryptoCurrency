@@ -1,5 +1,5 @@
 
-<center><h1>LISTADO de CRIPTOMONEDAS</h1></center>
+<center><h1>LISTADO CRIPTOMONEDAS</h1></center>
 
 
   
@@ -14,7 +14,7 @@
       <th scope="col">%_cambio_1h</th>
       <th scope="col">%_cambio_24h</th>
       <th scope="col">%_cambio_7d</th>
-      <th scope="col">market_cap</th>
+     
       
      
 
@@ -28,10 +28,10 @@
       <td><%= x["name"] %></td>
       <td><%= number_to_currency(x["quote"]["USD"]["price"]) %></td>
       
-      <td><%= x["quote"]["USD"]["percent_change_1h"] %>%</td>
-      <td><%= x["quote"]["USD"]["percent_change_24h"] %>%</td>
-      <td><%= x["quote"]["USD"]["percent_change_7d"] %>%</td>
-      <td><%= number_to_currency(x["quote"]["USD"]["market_cap"]) %></td>
+      <td><%= number_with_precision(x["quote"]["USD"]["percent_change_1h"], :precision=>2) %>%</td>
+      <td><%= number_with_precision(x["quote"]["USD"]["percent_change_24h"], :precision=>2) %>%</td>
+      <td><%= number_with_precision(x["quote"]["USD"]["percent_change_7d"], :precision=>2) %>%</td>
+      
       
       
     </tr>

@@ -6,10 +6,10 @@
     <tr>
       <th scope="col">Nombre</th>
       <th scope="col">Precio Actual</th>
-      <th scope="col">Valor Total</th>
-      <th scope="col">Total Pagado</th>
+      <th scope="col">Invertido</th>
+      <th scope="col">Se Cobraría</th>
       <th scope="col">Ganancia/Perdida</th>
-      <th scope="col">Precio Pagado</th>
+      <th scope="col">Precio inicial</th>
       <th scope="col">Cantidad</th>
       
     </tr>
@@ -25,10 +25,10 @@
         <% for x in @lookup_crypto %>
           <% if crypto.simbolo == x["symbol"] %>
             <td><%= link_to x["name"], crypto %> </td>
-            <td>$<%= x["quote"]["USD"]["price"] %> </td>
+            <td>$<%= number_with_precision(x["quote"]["USD"]["price"], :precision=>2) %> </td>
             <td>$<%= crypto.cost_per * crypto.amount_owned %> </td>
-            <td>$<%= x["quote"]["USD"]["price"].to_d * crypto.amount_owned %> </td>
-            <td>$<%= (x["quote"]["USD"]["price"].to_d * crypto.amount_owned) - (crypto.amount_owned  * crypto.cost_per)  %>  </td>
+            <td>$<%= number_with_precision((x["quote"]["USD"]["price"].to_d * crypto.amount_owned), :precision=>2) %> </td>
+            <td>$<%= number_with_precision(((x["quote"]["USD"]["price"].to_d * crypto.amount_owned) - (crypto.amount_owned  * crypto.cost_per)), :precision=>2)  %>  </td>
             <% @ganapierde +=  (x["quote"]["USD"]["price"].to_d * crypto.amount_owned) - (crypto.amount_owned  * crypto.cost_per)  %>
           <% end %>
         <% end %>
